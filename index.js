@@ -23,12 +23,16 @@ module.exports = function jasponyx(e, {
         continue
       }
 
-      let part = `${c.blue(attribute)}${c.white('=')}`
+      let part = `${c.cyan(attribute)}${c.white('=')}`
       const value = props[attribute]
       if (typeof value === 'string') {
         part += c.green(JSON.stringify(value))
       } else {
-        part += `${c.grey('{')}${c.white(JSON.stringify(value))}${c.grey('}')}`
+        let objStr = JSON.stringify(value)
+        if (objStr.length > 60) {
+          objStr = JSON.stringify(value, null, 2)
+        }
+        part += `${c.grey('{')}${c.white(objStr)}${c.grey('}')}`
       }
 
       parts.push(part)
@@ -90,16 +94,16 @@ module.exports = function jasponyx(e, {
     }
 
     // open the tag
-    let str = c.cyan(`<${c.underline(e.type.name)}`)
+    let str = c.magenta(`<${e.type.name}`)
 
     if (props && compositeProps) {
       str += propsToString(e.props)
     }
 
     if (contents) {
-      str += indent(`${c.cyan('>')}\n${contents}`) + `\n${c.red(`</${c.underline(e.type.name)}>`)}`
+      str += indent(`${c.magenta('>')}\n${contents}`) + `\n${c.magenta(`</${e.type.name}>`)}`
     } else {
-      str += c.cyan(' />')
+      str += c.magenta(' />')
     }
     return str
   }
@@ -114,18 +118,18 @@ module.exports = function jasponyx(e, {
     }
 
     // open the tag
-    let str = c.cyan(`<${e.type}`)
+    let str = c.blue(`<${e.type}`)
 
     if (props && nativeProps) {
       str += propsToString(e.props)
     }
 
     if (e.props.children) {
-      str += c.cyan('>')
+      str += c.blue('>')
       str += indent('\n' + renderChildren(e.props.children))
-      str += c.red(`\n</${e.type}>`)
+      str += c.blue(`\n</${e.type}>`)
     } else {
-      str += c.cyan(' />')
+      str += c.blue(' />')
     }
 
     return str
