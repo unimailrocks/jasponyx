@@ -1,6 +1,6 @@
 {
   "name": "jasponyx",
-  "version": "0.2.3",
+  "version": "0.3.2",
   "description": "The opinionated JSX pretty printer",
   "main": "index.js",
   "scripts": {
@@ -13,5 +13,8 @@
     "console"
   ],
   "author": "Ben Berman",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.1.2"
+  }
 }

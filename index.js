@@ -1,18 +1,19 @@
+const c = require('colors/safe')
+
 module.exports = function jasponyx(e, {
   props = true,
   composite = true,
   compositeProps = true,
   native = true,
   nativeProps = true,
-  indentation = '\t',
+  indentation = '  ',
 } = {}) {
   function indent(str, options) {
     if (!indentation) {
       return str
     }
 
-    return str
-      .replace(/(\n)/g, `$1${indentation}`)
+    return str.replace(/(\n)/g, `$1${indentation}`)
   }
 
   function propsToString(props) {
@@ -21,13 +22,15 @@ module.exports = function jasponyx(e, {
       if (attribute === 'children') {
         continue
       }
-      let part = `${attribute}=`
+
+      let part = `${c.blue(attribute)}${c.white('=')}`
       const value = props[attribute]
       if (typeof value === 'string') {
-        part += JSON.stringify(value)
+        part += c.green(JSON.stringify(value))
       } else {
-        part += `{${JSON.stringify(value)}}`
+        part += `${c.grey('{')}${c.white(JSON.stringify(value))}${c.grey('}')}`
       }
+
       parts.push(part)
     }
 
@@ -87,16 +90,16 @@ module.exports = function jasponyx(e, {
     }
 
     // open the tag
-    let str = `<${e.type.name}`
+    let str = c.cyan(`<${c.underline(e.type.name)}`)
 
     if (props && compositeProps) {
       str += propsToString(e.props)
     }
 
     if (contents) {
-      str += indent(`>\n${contents}`) + `\n</${e.type.name}>`
+      str += indent(`${c.cyan('>')}\n${contents}`) + `\n${c.red(`</${c.underline(e.type.name)}>`)}`
     } else {
-      str += ' />'
+      str += c.cyan(' />')
     }
     return str
   }
@@ -111,18 +114,18 @@ module.exports = function jasponyx(e, {
     }
 
     // open the tag
-    let str = `<${e.type}`
+    let str = c.cyan(`<${e.type}`)
 
     if (props && nativeProps) {
       str += propsToString(e.props)
     }
 
     if (e.props.children) {
-      str += '>'
+      str += c.cyan('>')
       str += indent('\n' + renderChildren(e.props.children))
-      str += `\n</${e.type}>`
+      str += c.red(`\n</${e.type}>`)
     } else {
-      str += ' />'
+      str += c.cyan(' />')
     }
 
     return str
@@ -135,7 +138,7 @@ module.exports = function jasponyx(e, {
       if (!native) {
         return ''
       }
-      return e
+      return c.white(e)
     } else { // implicit native element
       return renderNative(e)
     }
