@@ -1,4 +1,5 @@
 const c = require('colors/safe')
+const flatten = require('lodash.flattendeep')
 
 module.exports = function jasponyx(e, {
   props = true,
@@ -49,8 +50,7 @@ module.exports = function jasponyx(e, {
   }
 
   function renderChildren(children) {
-    const arr = typeof children.length !== 'undefined' ? children : [children]
-    let str = ''
+    const arr = typeof children.length !== 'undefined' ? flatten(children) : [children]
     let innerString = ''
     const parts = []
     for (let c of arr) {
@@ -58,7 +58,7 @@ module.exports = function jasponyx(e, {
         innerString += c
       } else {
         if (innerString.length !== 0 && native) {
-          parts.push(str)
+          parts.push(innerString)
           innerString = ''
         }
         const printed = pp(c)
@@ -126,7 +126,7 @@ module.exports = function jasponyx(e, {
 
     if (e.props.children) {
       str += c.blue('>')
-      str += indent('\n' + renderChildren(e.props.children))
+      str += indent('\n' + renderChildren(e.props.children), true)
       str += c.blue(`\n</${e.type}>`)
     } else {
       str += c.blue(' />')
@@ -136,6 +136,19 @@ module.exports = function jasponyx(e, {
   }
 
   function pp(e) {
+    if (!e.$$typeof || !e.$$typeof === Symbol('react.element')) {
+      if (typeof e === 'string' || typeof e === 'number') {
+        return c.white(e)
+      }
+
+      console.warn('Jasponyx found some kind of non-string, non-element object as a node. This element probably will not render successfully. Problem element rendered in red.')
+      let asString = JSON.stringify(e, null, 2)
+      if (asString.indexOf('\n') !== -1) { // a wild `.indexOf`! Catch it before it runs away!
+        asString += '\n'
+      }
+      return `${c.grey('{')}${c.red(asString)}${c.grey('}')}`
+    }
+
     if (typeof e.type === 'function') {
       return renderComposite(e)
     } else if (typeof e === 'string') {
