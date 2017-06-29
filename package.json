@@ -1,0 +1,17 @@
+{
+  "name": "jasponyx",
+  "version": "0.1.0",
+  "description": "The opinionated JSX pretty printer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jsx",
+    "pretty",
+    "formatting",
+    "console"
+  ],
+  "author": "Ben Berman",
+  "license": "ISC"
+}
