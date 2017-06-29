@@ -8,12 +8,19 @@ Context:
 
 ```jsx
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom/server'
 import pp from 'jasponyx'
 
 class CompOne extends Component {
+  moreStuff() {
+    return React.Children.map(this.props.children, (_, i) =>
+      <div>Count me off, Juliet {i}</div>)
+  }
+
   render() {
     return (
       <div>
+        {this.moreStuff()}
         And they've got spices!
         <CompTwo
           props="aren't"
@@ -53,6 +60,14 @@ const tree = (
   </div>
 )
 ```
+
+For some orientation, this is how React renders it.
+
+```jsx
+console.log(ReactDOM.renderToStaticMarkup(tree))
+```
+
+Gross, right?
 
 ```jsx
 console.log(pp(tree))
