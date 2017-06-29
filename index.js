@@ -30,7 +30,7 @@ module.exports = function jasponyx(e, {
       } else {
         let objStr = JSON.stringify(value)
         if (objStr.length > 60) {
-          objStr = JSON.stringify(value, null, 2)
+          objStr = indent(JSON.stringify(value, null, 2))
         }
         part += `${c.grey('{')}${c.white(objStr)}${c.grey('}')}`
       }
