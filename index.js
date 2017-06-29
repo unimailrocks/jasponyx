@@ -16,21 +16,29 @@ module.exports = function jasponyx(e, {
   }
 
   function propsToString(props) {
-    let propsString = ''
+    const parts = []
     for (let attribute in props) {
       if (attribute === 'children') {
         continue
       }
-      propsString += ` ${attribute}=`
+      let part = `${attribute}=`
       const value = props[attribute]
       if (typeof value === 'string') {
-        propsString += JSON.stringify(value)
+        part += JSON.stringify(value)
       } else {
-
-        propsString += `{${JSON.stringify(value)}}`
+        part += `{${JSON.stringify(value)}}`
       }
+      parts.push(part)
     }
-    return propsString
+
+    const splitUp = parts.join('').length > 80
+    const separator = splitUp ? `\n${indentation || ''}` : ' '
+    const str = parts.map(p => `${separator}${p}`).join('')
+    if (splitUp) {
+      return str + '\n'
+    }
+
+    return str
   }
 
   function renderChildren(children) {

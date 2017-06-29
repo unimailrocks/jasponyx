@@ -1,6 +1,6 @@
 {
   "name": "jasponyx",
-  "version": "0.1.0",
+  "version": "0.2.3",
   "description": "The opinionated JSX pretty printer",
   "main": "index.js",
   "scripts": {
