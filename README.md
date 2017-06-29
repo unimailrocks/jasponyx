@@ -66,6 +66,7 @@ For some orientation, this is how React renders it.
 ```jsx
 console.log(ReactDOM.renderToStaticMarkup(tree))
 ```
+![Minified html markup as rendered by ReactDOM](http://imgur.com/Cdf92rS.png)
 
 Gross, right?
 
@@ -73,25 +74,45 @@ Gross, right?
 console.log(pp(tree))
 ```
 
+![Pretty output from jasponyx with nothing turned off](http://i.imgur.com/9ivEg1F.png)
+
 ```jsx
 console.log(pp(tree, { props: false }))
 ```
+
+![Pretty output from jasponyx with props turned off](http://i.imgur.com/29sWviw.png)
 
 ```jsx
 console.log(pp(tree, { native: false }))
 ```
 
+![Pretty output from jasponyx with only composite nodes and text (no native)](http://i.imgur.com/w9akKPw.png)
+
+```jsx
+console.log(pp(tree, { native: false, text: false })
+```
+
+![Pretty output from jasponyx with only compiste nodes (no native or text)](http://i.imgur.com/g1k8bkP.png)
+
 ```jsx
 console.log(pp(tree, { nativeProps: false }))
 ```
+
+![Pretty output from jasponyx without props on the native nodes](http://i.imgur.com/8yYngNb.png)
 
 ```jsx
 console.log(pp(tree, { composite: false }))
 ```
 
+![Pretty output from jasponyx without composite nodes (only native and text)](http://i.imgur.com/vxVNnSH.png)
+
+Note the similarities to the output of `ReactDOM.renderToStaticMarkup`
+
 ```jsx
 console.log(pp(tree, { compositeProps: false }))
 ```
+
+![Pretty output from jasponyx without props on the composite nodes](http://i.imgur.com/imp9K7G.png)
 
 ## FAQ that no one has never asked
 
