@@ -6,7 +6,7 @@ It's an opinionated JSX pretty printer for the command line.
 
 Context:
 
-```javascript
+```jsx
 import React, { Component } from 'react'
 import pp from 'jasponyx'
 
@@ -54,27 +54,27 @@ const tree = (
 )
 ```
 
-```javascript
+```jsx
 console.log(pp(tree))
 ```
 
-```javascript
+```jsx
 console.log(pp(tree, { props: false }))
 ```
 
-```javascript
+```jsx
 console.log(pp(tree, { native: false }))
 ```
 
-```javascript
+```jsx
 console.log(pp(tree, { nativeProps: false }))
 ```
 
-```javascript
+```jsx
 console.log(pp(tree, { composite: false }))
 ```
 
-```javascript
+```jsx
 console.log(pp(tree, { compositeProps: false }))
 ```
 
