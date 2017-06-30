@@ -8,6 +8,7 @@ module.exports = function jasponyx(e, {
   native = true,
   nativeProps = true,
   indentation = '  ',
+  text = true,
 } = {}) {
   function indent(str, options) {
     if (!indentation) {
@@ -137,6 +138,10 @@ module.exports = function jasponyx(e, {
 
   function pp(e) {
     if (!e.$$typeof || !e.$$typeof === Symbol('react.element')) {
+      if (!text) {
+        return ''
+      }
+
       if (typeof e === 'string' || typeof e === 'number') {
         return c.white(e)
       }
