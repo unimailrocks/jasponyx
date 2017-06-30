@@ -89,6 +89,10 @@ module.exports = function jasponyx(e, {
       }
     })()
 
+    if (!rendered) {
+      return c.magenta(`<${e.type.name}`) + propsToString(e.props) + c.magenta(' />')
+    }
+
     const contents = pp(rendered)
     if (!composite) {
       return contents
