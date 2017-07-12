@@ -27,7 +27,9 @@ module.exports = function jasponyx(e, {
 
       let part = `${c.cyan(attribute)}${c.white('=')}`
       const value = props[attribute]
-      if (typeof value === 'string') {
+      if (value == null) {
+        continue
+      } else if (typeof value === 'string') {
         part += c.green(JSON.stringify(value))
       } else {
         let objStr = JSON.stringify(value)
@@ -90,7 +92,8 @@ module.exports = function jasponyx(e, {
     })()
 
     if (!rendered) {
-      return c.magenta(`<${e.type.name}`) + propsToString(e.props) + c.magenta(' />')
+      const propString = props && compositeProps ? propsToString(e.props) : ''
+      return c.magenta(`<${e.type.name}`) + propString + c.magenta(' />')
     }
 
     const contents = pp(rendered)
